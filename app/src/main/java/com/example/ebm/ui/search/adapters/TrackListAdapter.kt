@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.ebm.databinding.FavoriteSongListItemBinding
-import com.example.ebm.ui.PlayerActivity
+import com.example.ebm.ui.player.activity.PlayerActivity
 import com.example.ebm.ui.search.viewmodel.SearchViewModel
 import com.example.playlistmaker.ui.search.viewholders.TrackViewHolder
 import com.google.gson.Gson

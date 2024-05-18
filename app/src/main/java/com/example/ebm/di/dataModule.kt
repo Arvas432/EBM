@@ -35,4 +35,7 @@ val dataModule = module{
     single<NetworkClient>{
         RetrofitNetworkClient(get())
     }
+    factory{
+        MediaPlayer()
+    }
 }

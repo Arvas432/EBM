@@ -21,6 +21,9 @@ class SearchViewModel(
     private val searchRunnable = Runnable {
         iTunesSearch(searchData)
     }
+    init {
+        showHistory()
+    }
     fun searchDebounce() {
         handler.removeCallbacks(searchRunnable, SEARCH_RUNNABLE_TOKEN)
         handler.postDelayed(searchRunnable ,

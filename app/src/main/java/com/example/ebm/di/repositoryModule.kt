@@ -1,5 +1,7 @@
 package com.example.ebm.di
 
+import AndroidMediaPlayerRepositoryImpl
+import MediaPlayerRepository
 import SearchHistoryRepository
 import SearchHistoryRepositoryImpl
 import TracksRepository
@@ -12,5 +14,8 @@ val repositoryModule = module {
     }
     single<TracksRepository>{
         TracksRepositoryImpl(get())
+    }
+    factory<MediaPlayerRepository>{
+        AndroidMediaPlayerRepositoryImpl(get())
     }
 }
