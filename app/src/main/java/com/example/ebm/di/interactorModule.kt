@@ -1,5 +1,7 @@
 package com.example.ebm.di
 
+import PlayerInteractor
+import PlayerInteractorImpl
 import SearchHistoryInteractor
 import SearchHistoryInteractorImpl
 import TracksInteractor
@@ -12,5 +14,8 @@ val interactorModule = module{
     }
     factory<TracksInteractor>{
         TracksInteractorImpl(get())
+    }
+    factory<PlayerInteractor>{
+        PlayerInteractorImpl(get())
     }
 }

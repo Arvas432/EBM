@@ -11,6 +11,7 @@ import android.view.inputmethod.InputMethodManager
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.ebm.R
 import com.example.ebm.databinding.ActivitySearchBinding
 import com.example.ebm.ui.search.SearchState
 import com.example.ebm.ui.search.viewmodel.SearchViewModel
@@ -61,6 +62,9 @@ class SearchActivity : AppCompatActivity() {
                 viewModel.showHistory()
             }
         }
+        binding.backBtn.setOnClickListener {
+            viewModel.showHistory()
+        }
         binding.clearButton.setOnClickListener {
             tracks.clear()
             trackListAdapter.notifyDataSetChanged()
@@ -83,21 +87,44 @@ class SearchActivity : AppCompatActivity() {
     }
     private fun setLoadingScreenState(){
         setDefaultScreenState()
+        binding.favoritesRv.isVisible = false
+        binding.backBtn.isVisible = false
+        binding.welcomeTv.isVisible = false
+        binding.welcomeTextTv.isVisible = false
+        binding.tabLayout.isVisible = false
+        binding.songswitchRecyclerview.isVisible = false
+        binding.favoritesTv.text = getString(R.string.search_results)
+        binding.searchPb.isVisible = true
     }
     private fun setEmptyResultsScreenState(){
         setDefaultScreenState()
     }
     private fun setDefaultScreenState(){
-
+        binding.favoritesRv.isVisible = true
+        binding.searchPb.isVisible = false
+        binding.backBtn.isVisible = false
+        binding.welcomeTv.isVisible = true
+        binding.welcomeTextTv.isVisible = true
+        binding.tabLayout.isVisible = true
+        binding.songswitchRecyclerview.isVisible = true
+        binding.favoritesTv.text = getString(R.string.search_history)
     }
     private fun setSearchHistoryScreenState(searchHistory: List<Track>){
-        setDefaultScreenState()
-       /* tracks.clear()
+        binding.favoritesRv.isVisible = true
+        tracks.clear()
         tracks.addAll(searchHistory)
-        trackListAdapter.notifyDataSetChanged()*/
+        trackListAdapter.notifyDataSetChanged()
     }
     private fun setContentScreenState(results: List<Track>){
         setDefaultScreenState()
+        binding.favoritesRv.isVisible = true
+        binding.searchPb.isVisible = false
+        binding.backBtn.isVisible = true
+        binding.welcomeTv.isVisible = false
+        binding.welcomeTextTv.isVisible = false
+        binding.tabLayout.isVisible = false
+        binding.songswitchRecyclerview.isVisible = false
+        binding.favoritesTv.text = getString(R.string.search_results)
         tracks.clear()
         tracks.addAll(results)
         trackListAdapter.notifyDataSetChanged()
