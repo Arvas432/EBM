@@ -1,11 +1,11 @@
 package com.example.playlistmaker.ui.search.viewholders
 
-import Track
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.example.ebm.R
 import com.example.ebm.databinding.FavoriteSongListItemBinding
+import com.example.ebm.domain.search.models.Track
 
 
 class TrackViewHolder(private val binding: FavoriteSongListItemBinding): RecyclerView.ViewHolder(binding.root){

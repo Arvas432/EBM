@@ -1,4 +1,4 @@
-
+import com.example.ebm.domain.search.models.Track
 
 interface SearchHistoryInteractor {
     fun write(input: Track)

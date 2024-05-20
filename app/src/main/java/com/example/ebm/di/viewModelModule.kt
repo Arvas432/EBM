@@ -7,9 +7,9 @@ import org.koin.dsl.module
 
 val viewModelModule = module {
     viewModel{
-        SearchViewModel(get(), get())
+        SearchViewModel(get(), get(), get())
     }
     viewModel {
-        PlayerViewModel(get())
+        PlayerViewModel(get(), get())
     }
 }

@@ -1,5 +1,5 @@
-
-data class Track(
+package com.example.ebm.domain.search.models
+public data class Track(
     val trackId: Int,
     val trackName: String,
     val artistName: String,

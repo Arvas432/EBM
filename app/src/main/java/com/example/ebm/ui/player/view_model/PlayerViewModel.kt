@@ -2,10 +2,13 @@ import android.os.Looper
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.ebm.domain.search.PlaylistStorageInteractor
+import com.example.ebm.domain.search.models.Track
 import com.example.ebm.ui.player.PlayerState
 
 class PlayerViewModel(
-    private val playerInteractor: PlayerInteractor
+    private val playerInteractor: PlayerInteractor,
+    private val playlistStorageInteractor: PlaylistStorageInteractor
     ):ViewModel() {
     private var screenStateLiveData = MutableLiveData<PlayerState>(PlayerState.Default)
     private var currentPositionLiveData = MutableLiveData<Pair<String, Int>>()
@@ -54,6 +57,9 @@ class PlayerViewModel(
     }
     fun releasePlayer(){
         playerInteractor.releasePlayer()
+    }
+    fun addToFavorites(track: Track){
+        playlistStorageInteractor.addToFavorites(track)
     }
     private fun renderState(state: PlayerState){
         screenStateLiveData.postValue(state)

@@ -6,6 +6,8 @@ import SearchHistoryInteractor
 import SearchHistoryInteractorImpl
 import TracksInteractor
 import TracksInteractorImpl
+import com.example.ebm.domain.search.PlaylistStorageInteractor
+import com.example.ebm.domain.search.impl.PlaylistStorageInteractorImpl
 import org.koin.dsl.module
 
 val interactorModule = module{
@@ -17,5 +19,8 @@ val interactorModule = module{
     }
     factory<PlayerInteractor>{
         PlayerInteractorImpl(get())
+    }
+    factory<PlaylistStorageInteractor> {
+        PlaylistStorageInteractorImpl(get())
     }
 }

@@ -1,7 +1,8 @@
 package com.example.ebm.ui.player.activity
 
 import PlayerViewModel
-import Track
+import com.example.ebm.domain.search.models.Track
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.bumptech.glide.Glide
@@ -9,7 +10,10 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import com.example.ebm.R
 import com.example.ebm.databinding.ActivityPlayerBinding
+import com.example.ebm.ui.LyricsActivity
+import com.example.ebm.ui.PlaylistActivity
 import com.example.ebm.ui.player.PlayerState
+import com.example.ebm.ui.search.adapters.PlaylistListAdapter
 import com.google.gson.Gson
 
 class PlayerActivity : AppCompatActivity() {
@@ -32,12 +36,21 @@ class PlayerActivity : AppCompatActivity() {
         binding.playBtn.setOnClickListener {
             viewModel.playbackControl()
         }
+        binding.favoritesBtn.setOnClickListener {
+            binding.favoritesBtn.setImageResource(R.drawable.favorite_pressed)
+            viewModel.addToFavorites(track)
+        }
         Glide.with(this)
             .load(track.artworkUrl100.replaceAfterLast('/',"512x512bb.jpg"))
             .placeholder(R.drawable.placeholder)
             .fitCenter()
             .transform(RoundedCorners(resources.getDimensionPixelSize(R.dimen.track_image_rounding)))
             .into(binding.trackImageIv)
+        binding.learnTheTextTv.setOnClickListener {
+            val navigateToLyrics = Intent(this, LyricsActivity::class.java)
+            navigateToLyrics.putExtra(LYRICS_KEY, Gson().toJson(track))
+            startActivity(navigateToLyrics)
+        }
         binding.trackTitle.text = track.trackName
         binding.trackSubText.text = track.artistName
         binding.durationTv.text = getString(R.string.thirty_seconds)
@@ -71,5 +84,6 @@ class PlayerActivity : AppCompatActivity() {
     }
     companion object{
         const val TRACK_PLAYER_KEY = "TRACK_PLAYER_KEY"
+        const val LYRICS_KEY = "LYRICS_KEY"
     }
 }

@@ -1,7 +1,6 @@
 package com.example.ebm.ui.search.viewmodel
 
 import SearchHistoryInteractor
-import Track
 import TracksInteractor
 import TracksSearchResult
 import android.os.Handler
@@ -9,11 +8,14 @@ import android.os.Looper
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.ebm.domain.search.PlaylistStorageInteractor
+import com.example.ebm.domain.search.models.Track
 import com.example.ebm.ui.search.SearchState
 
 class SearchViewModel(
     private val tracksInteractor: TracksInteractor,
-    private val searchHistoryInteractor: SearchHistoryInteractor) : ViewModel(){
+    private val searchHistoryInteractor: SearchHistoryInteractor,
+    private val playlistStorageInteractor: PlaylistStorageInteractor) : ViewModel(){
     private var screenStateLiveData = MutableLiveData<SearchState>(SearchState.Default)
     private var searchData: String = SEARCH_DEF
     private var lastSearch: String = SEARCH_DEF
@@ -22,7 +24,8 @@ class SearchViewModel(
         iTunesSearch(searchData)
     }
     init {
-        showHistory()
+        handler.post { showHistory() }
+        handler.postDelayed({showPlaylists()},100L)
     }
     fun searchDebounce() {
         handler.removeCallbacks(searchRunnable, SEARCH_RUNNABLE_TOKEN)
@@ -34,7 +37,6 @@ class SearchViewModel(
     fun setSearchData(input: String){
         searchData = input
     }
-    fun getSearchData() = searchData
     fun getScreenStateLiveData(): LiveData<SearchState> = screenStateLiveData
 
     fun clearHistory(){
@@ -42,10 +44,17 @@ class SearchViewModel(
         renderState(SearchState.Default)
     }
     fun showHistory(){
-        handler.removeCallbacksAndMessages(null)
         val history = searchHistoryInteractor.read()
         if(history.isNotEmpty()){
             renderState(SearchState.SearchHistory(history))
+        }else{
+            renderState(SearchState.Default)
+        }
+    }
+    fun showPlaylists(){
+        val playlists = playlistStorageInteractor.getAll()
+        if(playlists.isNotEmpty()){
+            renderState(SearchState.Playlists(playlists))
         }else{
             renderState(SearchState.Default)
         }

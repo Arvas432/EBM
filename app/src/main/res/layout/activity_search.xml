@@ -84,13 +84,13 @@
         tools:visibility="visible"/>
     <ImageView
         android:id="@+id/clear_button"
-        android:layout_width="40dp"
+        android:layout_width="20dp"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="@id/search_field"
         app:layout_constraintTop_toTopOf="@id/search_field"
         app:layout_constraintBottom_toBottomOf="@id/search_field"
         android:src="@drawable/clear_icon"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="5dp"
         android:visibility="gone"
         tools:visibility="visible"
         app:tint="@color/light_gray" />
@@ -140,7 +140,8 @@
         app:layout_constraintTop_toBottomOf="@id/songswitch_recyclerview"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginStart="15dp"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="0dp"
+        app:layout_goneMarginTop="25dp"
         android:text="@string/search_history"
         android:textColor="@color/white"
         android:textSize="16sp"

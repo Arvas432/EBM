@@ -16,4 +16,8 @@
     <string name="search_history">Search history</string>
     <string name="zeropos">00:00</string>
     <string name="thirty_seconds">00:30</string>
+    <string name="email_hint">Yourmail@gmail.com</string>
+    <string name="password">Password</string>
+    <string name="sign_in">Sign in</string>
+    <string name="song_lyrics_not_found">Song lyrics not found :(</string>
 </resources>
