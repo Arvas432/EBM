@@ -1,3 +1,4 @@
+import com.example.ebm.domain.search.models.Track
 
 interface SearchHistoryRepository {
     fun write(input: Track)

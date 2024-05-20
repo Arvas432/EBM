@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/main_black"
+    android:background="?attr/colorPrimary"
     tools:context=".ui.PlaylistActivity">
 
     <ImageView
@@ -26,12 +26,17 @@
 
 
     <ImageView
+        android:layout_marginHorizontal="5dp"
+        app:layout_constraintVertical_bias="0.0"
         android:id="@+id/playlist_image_iv"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:maxHeight="100dp"
+        app:layout_constraintBottom_toBottomOf="@id/favorites_rv"
         android:adjustViewBounds="true"
+        android:layout_marginTop="-30dp"
+        app:layout_constraintDimensionRatio="h,1:1"
         android:src="@drawable/playlist_image"
-        app:layout_constraintBottom_toTopOf="@+id/favorites_rv"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -107,11 +112,14 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/favorites_rv"
+
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/playlist_image_iv"
         tools:listitem="@layout/favorite_song_list_item"/>
 
 

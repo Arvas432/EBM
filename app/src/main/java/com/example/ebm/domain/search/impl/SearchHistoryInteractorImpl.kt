@@ -1,3 +1,4 @@
+import com.example.ebm.domain.search.models.Track
 
 class SearchHistoryInteractorImpl(private val repository: SearchHistoryRepository): SearchHistoryInteractor {
     override fun write(input: Track) {

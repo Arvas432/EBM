@@ -7,9 +7,11 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 <androidx.appcompat.widget.AppCompatImageView
     android:layout_width="130dp"
+    android:id="@+id/playlist_image_iv"
     android:layout_height="125dp"
     tools:src="@drawable/example_image"/>
     <TextView
+        android:id="@+id/title_tv"
         android:layout_width="wrap_content"
         android:layout_height="16sp"
         android:lineHeight="16sp"
@@ -18,8 +20,9 @@
         android:textSize="11sp"
         android:layout_marginStart="4dp"
         android:layout_marginTop="5dp"
-        android:textColor="@color/white"/>
+        android:textColor="?attr/colorOnPrimary"/>
     <TextView
+        android:id="@+id/subtitle_tv"
         android:layout_width="wrap_content"
         android:layout_height="10dp"
         tools:text="Explore again"

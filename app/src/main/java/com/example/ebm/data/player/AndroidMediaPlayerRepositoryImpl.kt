@@ -10,7 +10,6 @@ class AndroidMediaPlayerRepositoryImpl(private var mediaPlayer: MediaPlayer): Me
             playerState = PLAYER_STATE_PREPARED
             action()
         }
-        //хаха
     }
     override fun play(){
         mediaPlayer.start()

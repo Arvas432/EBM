@@ -1,6 +1,7 @@
 package com.example.ebm.ui.search
 
-import Track
+import com.example.ebm.domain.search.models.Playlist
+import com.example.ebm.domain.search.models.Track
 
 
 sealed class SearchState{
@@ -10,4 +11,5 @@ sealed class SearchState{
     object EmptyResults: SearchState()
     data class SearchHistory(val tracks: List<Track>) : SearchState()
     data class Content(val tracks: List<Track>): SearchState()
+    data class Playlists(val playlists: List<Playlist>): SearchState()
 }

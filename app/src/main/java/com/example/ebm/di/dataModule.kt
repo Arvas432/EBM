@@ -7,6 +7,12 @@ import RetrofitNetworkClient
 import SharedPreferencesLocalTrackStorageHandler
 import android.content.Context
 import android.media.MediaPlayer
+import com.example.ebm.data.search.LocalPlaylistStorageHandler
+import com.example.ebm.data.search.impl.PlaylistStorageRepositoryImpl
+import com.example.ebm.data.search.impl.SharedPreferencesLocalPlaylistStorageHandler
+import com.example.ebm.domain.search.PlaylistStorageInteractor
+import com.example.ebm.domain.search.PlaylistStorageRepository
+import com.example.ebm.domain.search.impl.PlaylistStorageInteractorImpl
 import com.google.gson.Gson
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
@@ -37,5 +43,14 @@ val dataModule = module{
     }
     factory{
         MediaPlayer()
+    }
+    single<LocalPlaylistStorageHandler> {
+        SharedPreferencesLocalPlaylistStorageHandler(get(), get())
+    }
+    factory<PlaylistStorageInteractor> {
+        PlaylistStorageInteractorImpl(get())
+    }
+    factory<PlaylistStorageRepository> {
+        PlaylistStorageRepositoryImpl(get())
     }
 }

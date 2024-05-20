@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/main_black"
+    android:background="?attr/colorPrimary"
     tools:context=".ui.search.activity.SearchActivity">
     <ImageView
         android:layout_width="match_parent"
@@ -24,8 +24,26 @@
         android:text="@string/Welcome"
         android:fontFamily="@font/open_sans_medium"
         android:textSize="21sp"
-        android:textColor="@color/white"
+        android:textColor="?attr/colorOnPrimary"
         android:lineHeight="21sp"/>
+    <com.google.android.material.switchmaterial.SwitchMaterial
+        android:id="@+id/dark_mode_switch"
+        android:text="@string/dark_theme"
+        app:thumbTint="?attr/colorSwitchThumbNormal"
+        app:trackTint="?attr/colorSurface"
+        android:textSize="16sp"
+        android:textColor="?attr/colorOnPrimary"
+        android:fontFamily="@font/open_sans_medium"
+        android:lineHeight="21sp"
+        android:paddingStart="16dp"
+        android:layout_marginEnd="15dp"
+        android:paddingEnd="6dp"
+        android:padding="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/welcome_tv"
+        android:layout_gravity="start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
     <TextView
         android:id="@+id/welcome_text_tv"
         android:layout_width="wrap_content"
@@ -84,13 +102,13 @@
         tools:visibility="visible"/>
     <ImageView
         android:id="@+id/clear_button"
-        android:layout_width="40dp"
+        android:layout_width="20dp"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="@id/search_field"
         app:layout_constraintTop_toTopOf="@id/search_field"
         app:layout_constraintBottom_toBottomOf="@id/search_field"
         android:src="@drawable/clear_icon"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="5dp"
         android:visibility="gone"
         tools:visibility="visible"
         app:tint="@color/light_gray" />
@@ -106,7 +124,7 @@
         app:tabIndicatorHeight="2dp"
         app:tabIndicatorGravity="bottom"
         app:tabIndicatorColor="@color/main_purple"
-        app:tabSelectedTextColor="@color/white">
+        app:tabSelectedTextColor="?attr/colorOnPrimary">
         <com.google.android.material.tabs.TabItem
             android:layout_height="5dp"
             android:layout_width="30dp"
@@ -140,9 +158,10 @@
         app:layout_constraintTop_toBottomOf="@id/songswitch_recyclerview"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginStart="15dp"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="0dp"
+        app:layout_goneMarginTop="25dp"
         android:text="@string/search_history"
-        android:textColor="@color/white"
+        android:textColor="?attr/colorOnPrimary"
         android:textSize="16sp"
         android:fontFamily="@font/open_sans_medium"/>
     <androidx.recyclerview.widget.RecyclerView

@@ -1,19 +1,26 @@
 package com.example.ebm.ui.search.activity
 
-import Track
 import TrackListAdapter
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.AttributeSet
+import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.ebm.App
 import com.example.ebm.R
 import com.example.ebm.databinding.ActivitySearchBinding
+import com.example.ebm.domain.search.models.Playlist
+import com.example.ebm.domain.search.models.Track
 import com.example.ebm.ui.search.SearchState
+import com.example.ebm.ui.search.adapters.PlaylistListAdapter
 import com.example.ebm.ui.search.viewmodel.SearchViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -22,7 +29,10 @@ class SearchActivity : AppCompatActivity() {
     private val viewModel by viewModel<SearchViewModel>()
     private var searchFieldEmpty: Boolean = true
     private var tracks = ArrayList<Track>()
+    private var playlists = ArrayList<Playlist>()
+    private lateinit var playlistListAdapter: PlaylistListAdapter
     private lateinit var trackListAdapter: TrackListAdapter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySearchBinding.inflate(layoutInflater)
@@ -30,10 +40,33 @@ class SearchActivity : AppCompatActivity() {
         viewModel.getScreenStateLiveData().observe(this){
             renderState(it)
         }
+        val sharedPrefs = getSharedPreferences(EBM_PREFERENCES, MODE_PRIVATE)
+        playlistListAdapter = PlaylistListAdapter(playlists)
         trackListAdapter = TrackListAdapter(tracks, viewModel)
         binding.favoritesRv.adapter = trackListAdapter
         binding.favoritesRv.layoutManager = LinearLayoutManager(this)
+        binding.songswitchRecyclerview.adapter = playlistListAdapter
+        binding.songswitchRecyclerview.layoutManager = LinearLayoutManager(this)
         binding.favoritesRv.isVisible = true
+        binding.songswitchRecyclerview.isVisible = true
+        if((applicationContext as App).darkTheme){
+           binding.darkModeSwitch.isChecked = true
+        }
+        binding.darkModeSwitch.setOnCheckedChangeListener { switcher, isChecked ->
+            (applicationContext as App).switchTheme(isChecked)
+            if (isChecked){
+                sharedPrefs
+                    .edit()
+                    .putString(THEME_MODE_KEY, DARK_MODE_VALUE)
+                    .apply()
+            }
+            else{
+                sharedPrefs
+                    .edit()
+                    .putString(THEME_MODE_KEY, LIGHT_MODE_VALUE)
+                    .apply()
+            }
+        }
 
         val searchFieldTextWatcher = object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) = Unit
@@ -59,11 +92,13 @@ class SearchActivity : AppCompatActivity() {
         binding.searchField.addTextChangedListener(searchFieldTextWatcher)
         binding.searchField.setOnFocusChangeListener { _, hasFocus ->
             if(hasFocus && binding.searchField.text?.isEmpty() != false){
-                viewModel.showHistory()
+
             }
         }
         binding.backBtn.setOnClickListener {
+            viewModel.showPlaylists()
             viewModel.showHistory()
+            setDefaultScreenState()
         }
         binding.clearButton.setOnClickListener {
             tracks.clear()
@@ -82,8 +117,17 @@ class SearchActivity : AppCompatActivity() {
             false
         }
     }
+
     private fun setNetworkErrorScreenState(){
         setDefaultScreenState()
+        Toast.makeText(this, getString(R.string.network_error), Toast.LENGTH_SHORT).show()
+    }
+    private fun setPlaylistsShowingScreenState(playlistsInput: List<Playlist>){
+        setDefaultScreenState()
+        binding.songswitchRecyclerview.isVisible = true
+        playlists.clear()
+        playlists.addAll(playlistsInput)
+        playlistListAdapter.notifyDataSetChanged()
     }
     private fun setLoadingScreenState(){
         setDefaultScreenState()
@@ -98,6 +142,7 @@ class SearchActivity : AppCompatActivity() {
     }
     private fun setEmptyResultsScreenState(){
         setDefaultScreenState()
+        Toast.makeText(this, getString(R.string.nothing_found), Toast.LENGTH_SHORT).show()
     }
     private fun setDefaultScreenState(){
         binding.favoritesRv.isVisible = true
@@ -110,13 +155,13 @@ class SearchActivity : AppCompatActivity() {
         binding.favoritesTv.text = getString(R.string.search_history)
     }
     private fun setSearchHistoryScreenState(searchHistory: List<Track>){
+        setDefaultScreenState()
         binding.favoritesRv.isVisible = true
         tracks.clear()
         tracks.addAll(searchHistory)
         trackListAdapter.notifyDataSetChanged()
     }
     private fun setContentScreenState(results: List<Track>){
-        setDefaultScreenState()
         binding.favoritesRv.isVisible = true
         binding.searchPb.isVisible = false
         binding.backBtn.isVisible = true
@@ -137,7 +182,14 @@ class SearchActivity : AppCompatActivity() {
             is SearchState.EmptyResults ->{setEmptyResultsScreenState()}
             is SearchState.SearchHistory ->{setSearchHistoryScreenState(state.tracks)}
             is SearchState.Content ->{setContentScreenState(state.tracks)}
+            is SearchState.Playlists->{setPlaylistsShowingScreenState(state.playlists)}
         }
 
+    }
+    companion object{
+        const val EBM_PREFERENCES = "EBM_PREFERENCES"
+        const val DARK_MODE_VALUE = "dark"
+        const val LIGHT_MODE_VALUE = "light"
+        const val THEME_MODE_KEY = "key_for_theme_mode"
     }
 }

@@ -1,3 +1,4 @@
+import com.example.ebm.domain.search.models.Track
 
 class SearchHistoryRepositoryImpl(private val localTrackStorageHandler: LocalTrackStorageHandler): SearchHistoryRepository {
     override fun write(input: Track) {
