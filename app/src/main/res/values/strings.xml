@@ -20,4 +20,7 @@
     <string name="password">Password</string>
     <string name="sign_in">Sign in</string>
     <string name="song_lyrics_not_found">Song lyrics not found :(</string>
+    <string name="network_error">Network error :(</string>
+    <string name="nothing_found">Nothing found :(</string>
+    <string name="dark_theme">Dark theme</string>
 </resources>

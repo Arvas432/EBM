@@ -1,10 +1,15 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Base.Theme.EBM" parent="Theme.Material3.DayNight.NoActionBar">
-        <item name="colorPrimary">@color/main_black</item>
+        <item name="colorPrimary">@color/white</item>
         <item name="android:navigationBarColor">@color/main_black</item>
         <item name="android:statusBarColor">?attr/colorPrimary</item>
         <item name="colorPrimaryDark">@color/main_black</item>
+        <item name="colorOnPrimary">@color/main_black</item>
+        <item name="colorSecondary">@color/main_purple</item>
+        <item name="colorOnSecondary">@color/white</item>
+        <item name="colorSwitchThumbNormal">@color/yp_text_gray</item>
+        <item name="colorSurface">@color/light_gray</item>
     </style>
 
     <style name="Theme.EBM" parent="Base.Theme.EBM" />

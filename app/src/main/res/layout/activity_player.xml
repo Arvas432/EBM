@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/main_black"
+    android:background="?attr/colorPrimary"
     tools:context=".ui.player.activity.PlayerActivity">
     <ImageView
         android:layout_width="wrap_content"
@@ -65,7 +65,7 @@
         android:layout_marginStart="10dp"
         app:layout_constraintStart_toStartOf="@id/track_image_iv"
         app:layout_constraintBottom_toTopOf="@id/track_sub_text"
-        android:textColor="@color/white"
+        android:textColor="?attr/colorOnPrimary"
         android:fontFamily="@font/open_sans_medium"
         android:textSize="25sp"
         android:layout_marginTop="30dp"

@@ -10,9 +10,11 @@ import android.util.AttributeSet
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.ebm.App
 import com.example.ebm.R
 import com.example.ebm.databinding.ActivitySearchBinding
 import com.example.ebm.domain.search.models.Playlist
@@ -30,6 +32,7 @@ class SearchActivity : AppCompatActivity() {
     private var playlists = ArrayList<Playlist>()
     private lateinit var playlistListAdapter: PlaylistListAdapter
     private lateinit var trackListAdapter: TrackListAdapter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySearchBinding.inflate(layoutInflater)
@@ -37,6 +40,7 @@ class SearchActivity : AppCompatActivity() {
         viewModel.getScreenStateLiveData().observe(this){
             renderState(it)
         }
+        val sharedPrefs = getSharedPreferences(EBM_PREFERENCES, MODE_PRIVATE)
         playlistListAdapter = PlaylistListAdapter(playlists)
         trackListAdapter = TrackListAdapter(tracks, viewModel)
         binding.favoritesRv.adapter = trackListAdapter
@@ -45,6 +49,24 @@ class SearchActivity : AppCompatActivity() {
         binding.songswitchRecyclerview.layoutManager = LinearLayoutManager(this)
         binding.favoritesRv.isVisible = true
         binding.songswitchRecyclerview.isVisible = true
+        if((applicationContext as App).darkTheme){
+           binding.darkModeSwitch.isChecked = true
+        }
+        binding.darkModeSwitch.setOnCheckedChangeListener { switcher, isChecked ->
+            (applicationContext as App).switchTheme(isChecked)
+            if (isChecked){
+                sharedPrefs
+                    .edit()
+                    .putString(THEME_MODE_KEY, DARK_MODE_VALUE)
+                    .apply()
+            }
+            else{
+                sharedPrefs
+                    .edit()
+                    .putString(THEME_MODE_KEY, LIGHT_MODE_VALUE)
+                    .apply()
+            }
+        }
 
         val searchFieldTextWatcher = object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) = Unit
@@ -98,6 +120,7 @@ class SearchActivity : AppCompatActivity() {
 
     private fun setNetworkErrorScreenState(){
         setDefaultScreenState()
+        Toast.makeText(this, getString(R.string.network_error), Toast.LENGTH_SHORT).show()
     }
     private fun setPlaylistsShowingScreenState(playlistsInput: List<Playlist>){
         setDefaultScreenState()
@@ -119,6 +142,7 @@ class SearchActivity : AppCompatActivity() {
     }
     private fun setEmptyResultsScreenState(){
         setDefaultScreenState()
+        Toast.makeText(this, getString(R.string.nothing_found), Toast.LENGTH_SHORT).show()
     }
     private fun setDefaultScreenState(){
         binding.favoritesRv.isVisible = true
@@ -161,5 +185,11 @@ class SearchActivity : AppCompatActivity() {
             is SearchState.Playlists->{setPlaylistsShowingScreenState(state.playlists)}
         }
 
+    }
+    companion object{
+        const val EBM_PREFERENCES = "EBM_PREFERENCES"
+        const val DARK_MODE_VALUE = "dark"
+        const val LIGHT_MODE_VALUE = "light"
+        const val THEME_MODE_KEY = "key_for_theme_mode"
     }
 }

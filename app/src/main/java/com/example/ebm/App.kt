@@ -12,7 +12,7 @@ import org.koin.core.context.startKoin
 class App: Application() {
     var darkTheme = false
     override fun onCreate() {
-        val savedThemeValue = getSharedPreferences(PLAYLIST_MAKER_PREFERENCES, MODE_PRIVATE).getString(
+        val savedThemeValue = getSharedPreferences(EBM_PREFERENCES, MODE_PRIVATE).getString(
             THEME_MODE_KEY, "")
         if(savedThemeValue.isNullOrEmpty()){
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
@@ -48,6 +48,6 @@ class App: Application() {
     companion object {
 
         const val THEME_MODE_KEY = "key_for_theme_mode"
-        const val PLAYLIST_MAKER_PREFERENCES = "playlist_maker_preferences"
+        const val EBM_PREFERENCES = "EBM_PREFERENCES"
     }
 }
