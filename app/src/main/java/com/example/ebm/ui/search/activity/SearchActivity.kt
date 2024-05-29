@@ -189,6 +189,7 @@ class SearchActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+        //хихи
         viewModel.fetchDataForDefault()
     }
     companion object{
