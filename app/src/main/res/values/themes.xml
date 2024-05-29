@@ -2,7 +2,7 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.EBM" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="colorPrimary">@color/white</item>
-        <item name="android:navigationBarColor">@color/main_black</item>
+        <item name="android:navigationBarColor">?attr/colorPrimary</item>
         <item name="android:statusBarColor">?attr/colorPrimary</item>
         <item name="colorPrimaryDark">@color/main_black</item>
         <item name="colorOnPrimary">@color/main_black</item>

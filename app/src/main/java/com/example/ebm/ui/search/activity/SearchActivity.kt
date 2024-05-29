@@ -186,6 +186,11 @@ class SearchActivity : AppCompatActivity() {
         }
 
     }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.fetchDataForDefault()
+    }
     companion object{
         const val EBM_PREFERENCES = "EBM_PREFERENCES"
         const val DARK_MODE_VALUE = "dark"
