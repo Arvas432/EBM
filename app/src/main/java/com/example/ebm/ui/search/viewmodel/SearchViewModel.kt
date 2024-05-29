@@ -27,6 +27,10 @@ class SearchViewModel(
         handler.post { showHistory() }
         handler.postDelayed({showPlaylists()},500L)
     }
+    fun fetchDataForDefault(){
+        handler.post { showHistory() }
+        handler.postDelayed({showPlaylists()},500L)
+    }
     fun searchDebounce() {
         handler.removeCallbacks(searchRunnable, SEARCH_RUNNABLE_TOKEN)
         handler.postDelayed(searchRunnable ,

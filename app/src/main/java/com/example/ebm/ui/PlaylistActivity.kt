@@ -38,6 +38,9 @@ class PlaylistActivity : AppCompatActivity() {
         binding.trackSubText.text = playlist.subtitle
         adapter = TrackListAdapter(playlist.tracks, viewModel)
         binding.favoritesRv.adapter = adapter
+        binding.backBtn.setOnClickListener {
+            finish()
+        }
 
     }
     companion object{
