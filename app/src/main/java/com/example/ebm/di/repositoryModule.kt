@@ -6,6 +6,7 @@ import SearchHistoryRepository
 import SearchHistoryRepositoryImpl
 import TracksRepository
 import TracksRepositoryImpl
+import com.example.ebm.data.registration.UserRepository
 import com.example.ebm.data.search.impl.PlaylistStorageRepositoryImpl
 import com.example.ebm.domain.search.PlaylistStorageRepository
 import org.koin.dsl.module
@@ -23,4 +24,5 @@ val repositoryModule = module {
     factory<PlaylistStorageRepository> {
         PlaylistStorageRepositoryImpl(get())
     }
+    single { UserRepository(get()) }
 }
