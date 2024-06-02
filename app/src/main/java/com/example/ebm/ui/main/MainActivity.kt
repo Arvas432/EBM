@@ -59,7 +59,6 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
             }
-            //startActivity(Intent(this, SearchActivity::class.java))
         }
         binding.registerButton.setOnClickListener {
             when(isSignIn){
